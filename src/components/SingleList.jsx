@@ -23,7 +23,7 @@ const SingleList = ({ list, setLists }) => {
   }, [list.id]);
 
   const handleArchiveList = async (e) => {
-    setLists((prev) => prev.filter((item) => item.id !== e.target.id));
+    setLists((prev) => prev.filter((item) => item.id !== e.target.id));635
     toast.success("List Deleted Successfully");
     await archiveListById(e.target.id);
   };
@@ -37,7 +37,7 @@ const SingleList = ({ list, setLists }) => {
             <h2 className="text-xl font-bold">{list.name}</h2>
             <button
               id={list.id}
-              className="absolute top-0 right-0 text-black hover:text-white hover:bg-black p-2 rounded-full border-2 border-gray-500 hover:border-white"
+              className="absolute top-0 right-0 text-black hover:text-white hover:bg-black p-2 rounded-lg border-2 border-gray-500 hover:border-white"
               onClick={(e) => handleArchiveList(e)}
             >
               DELETE

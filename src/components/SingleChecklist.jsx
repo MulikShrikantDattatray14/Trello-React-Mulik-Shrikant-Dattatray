@@ -70,7 +70,7 @@ const SingleChecklist = ({ checklist, setCheckLists }) => {
       <button
         id={checklist.id}
         onClick={handleDeleteChecklist}
-        className="absolute top-0 right-0 text-xs text-black hover:text-white hover:bg-black border-2 border-gray-500 p-2 rounded-full"
+        className="absolute top-0 right-0 text-sm text-black hover:text-white hover:bg-black border-2 border-gray-500 p-1"
       >
         DELETE
       </button>
@@ -100,7 +100,7 @@ const SingleChecklist = ({ checklist, setCheckLists }) => {
           <button
             id={item.id}
             onClick={handleDeleteChecklistItem}
-            className="absolute top-0 right-0 text-xs text-black hover:text-white hover:bg-black border-2 border-gray-500 p-2 rounded-full"
+            className="absolute top-0 right-0 text-xs text-black hover:text-white hover:bg-black border-2 border-gray-500 "
           >
             DELETE
           </button>

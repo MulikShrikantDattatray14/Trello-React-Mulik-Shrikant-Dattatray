@@ -42,7 +42,7 @@ const SingleCard = ({ card, setCards }) => {
                 e.stopPropagation();
                 handleDeleteCard(e);
               }}
-              className="absolute top-0 right-0 text-sm text-black-300 hover:text-white hover:bg-black p-2 rounded-full border-2 border-black hover:border-white mb-10"
+              className="absolute top-0 right-0 text-xs p-1 text-black-300 hover:text-white hover:bg-black  border-2 border-black hover:border-white mb-10"
             >
               DELETE
             </button>
