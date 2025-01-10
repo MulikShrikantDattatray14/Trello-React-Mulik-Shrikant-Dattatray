@@ -16,7 +16,6 @@ const AllLists = ({ lists, listsUpdate, AllBoardsInfo }) => {
 
   return (
     <div className="w-full h-[95vh] bg-gray-700 z-100 relative flex flex-col gap-2">
-     
       <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-200 p-4">
         <CreateListButton
           AllBoardsInfo={AllBoardsInfo}
@@ -27,14 +26,10 @@ const AllLists = ({ lists, listsUpdate, AllBoardsInfo }) => {
         />
       </div>
 
-      
-
-      
       <div className="fixed top-48 left-1/2 transform -translate-x-1/2 z-140 text-center w-auto">
         <h2 className="text-2xl font-bold text-white">{BoardName}</h2>
       </div>
 
-      
       <div className="flex gap-2 overflow-x-auto pt-60">
         {lists.map((list) => (
           <SingleList key={list.id} list={list} setLists={listsUpdate} />

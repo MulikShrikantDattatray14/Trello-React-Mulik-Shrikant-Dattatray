@@ -31,7 +31,9 @@ export async function createList(url, name, BoardID) {
       },
     }
   );
-  
+
+  //console.log(response)
+
   return response.data;
 }
 
@@ -53,21 +55,33 @@ export async function createCard(url, name, list) {
 }
 
 export async function createChecklist(name, url) {
-  const response = await axios.post(url, null, {
-    params: {
+  const response = await axios.post(
+    url,
+    {
       name: name,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   return response.data;
 }
 
 export async function createChecklistItem(name, url) {
-  const response = await axios.post(url, null, {
-    params: {
+  const response = await axios.post(
+    url,
+    {
       name: name,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   return response.data;
 }
