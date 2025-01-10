@@ -16,7 +16,6 @@ const SingleChecklist = ({ checklist, setCheckLists }) => {
       (item) => item.state === "complete"
     ).length;
 
-    
     if ((completedCount / checkItems.length) * 100) {
       return (completedCount / checkItems.length) * 100;
     }
