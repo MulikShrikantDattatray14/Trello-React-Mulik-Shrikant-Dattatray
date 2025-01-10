@@ -27,7 +27,7 @@ export async function fetchLists(boardId) {
 export async function fetchCards(listId) {
   let url = `${config.baseCardsUrl}/${listId}/cards?key=${config.key}&token=${config.token}`;
 
-  const cardsData = getAllItems(url);
+  const cardsData = await getAllItems(url);
   return cardsData;
 }
 
