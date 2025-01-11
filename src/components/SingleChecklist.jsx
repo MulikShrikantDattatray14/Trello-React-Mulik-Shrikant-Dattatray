@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { toast } from "react-toastify";
 import {
   updateChecklistItemById,
@@ -7,11 +7,59 @@ import {
 } from "../services/apiCalls";
 import CreateChecklistItemButton from "./cardCreatorButtons/CreateChecklistItemButton";
 
-const SingleChecklist = ({ checklist, setCheckLists }) => {
-  const [checkItems, setCheckItems] = useState(checklist.checkItems);
+const checkItemsReducer = (state, action) => {
+  switch (action.type) {
+    case "handleCheckboxChange": {
+      const toggleItemState = (currentState) => {
+        return currentState === "complete" ? "incomplete" : "complete";
+      };
+
+      const updateChecklistItem = (itemId, newState, checklist) => {
+        updateChecklistItemById(itemId, newState, checklist);
+      };
+
+      const updateCheckItemsState = (itemId, newState) => {
+        return state.map((item) =>
+          item.id === itemId ? { ...item, state: newState } : item
+        );
+      };
+
+      // setCheckItems((prevItems) => {
+      //   const itemToUpdate = prevItems.find((item) => item.id === itemId);
+      //   if (!itemToUpdate) return prevItems;
+      //   const newState = toggleItemState(itemToUpdate.state);
+      //   updateChecklistItem(itemId, newState, checklist);
+      //   return updateCheckItemsState(prevItems, itemId, newState);
+      // });
+
+      const itemToUpdate = state.find((item) => item.id === action.itemId);
+      if (!itemToUpdate) return state;
+      const newState = toggleItemState(itemToUpdate.state);
+      updateChecklistItem(action.itemId, newState, action.checklist);
+      // item.id === action.itemId ? { ...item, state: newState } : item
+      return updateCheckItemsState(action.itemId, newState);
+    }
+
+    case "addCheckLists":
+      return [...state, action.newChecklistItem];
+    //setCheckItems((prev) => [...prev, newChecklistItem]);
+
+    case "deleteCheckLists":
+      return state.filter((item) => item.id != action.e.target.id);
+    ////setCheckItems((prev) => [...state.checkitems].filter((item) => item.id !== e.target.id));
+  }
+};
+
+const SingleChecklist = ({ checklist, dispatchCheckLists }) => {
+  //const [checkItems, setCheckItems] = useState(checklist.checkItems);
+  const [checkItems, dispatchCheckItems] = useReducer(
+    checkItemsReducer,
+    checklist.checkItems
+  );
+  //console.log(checkItems);
   const [isAdding, setIsAdding] = useState(false);
 
-  const calculateCompletionPercentage = () => {
+  function calculateCompletionPercentage() {
     const completedCount = checkItems.filter(
       (item) => item.state === "complete"
     ).length;
@@ -20,42 +68,47 @@ const SingleChecklist = ({ checklist, setCheckLists }) => {
       return (completedCount / checkItems.length) * 100;
     }
     return 0;
-  };
+  }
 
-  const toggleItemState = (currentState) => {
-    return currentState === "complete" ? "incomplete" : "complete";
-  };
+  // const toggleItemState = (currentState) => {
+  //   return currentState === "complete" ? "incomplete" : "complete";
+  // };
 
-  const updateChecklistItem = (itemId, newState, checklist) => {
-    updateChecklistItemById(itemId, newState, checklist);
-  };
+  // const updateChecklistItem = (itemId, newState, checklist) => {
+  //   updateChecklistItemById(itemId, newState, checklist);
+  // };
 
-  const updateCheckItemsState = (checkItems, itemId, newState) => {
-    return checkItems.map((item) =>
-      item.id === itemId ? { ...item, state: newState } : item
-    );
-  };
+  // const updateCheckItemsState = (checkItems, itemId, newState) => {
+  //   return checkItems.map((item) =>
+  //     item.id === itemId ? { ...item, state: newState } : item
+  //   );
+  // };
 
   const handleCheckboxChange = (itemId) => {
-    setCheckItems((prevItems) => {
-      const itemToUpdate = prevItems.find((item) => item.id === itemId);
-      if (!itemToUpdate) return prevItems;
-
-      const newState = toggleItemState(itemToUpdate.state);
-      updateChecklistItem(itemId, newState, checklist);
-
-      return updateCheckItemsState(prevItems, itemId, newState);
+    // setCheckItems((prevItems) => {
+    //   const itemToUpdate = prevItems.find((item) => item.id === itemId);
+    //   if (!itemToUpdate) return prevItems;
+    //   const newState = toggleItemState(itemToUpdate.state);
+    //   updateChecklistItem(itemId, newState, checklist);
+    //   return updateCheckItemsState(prevItems, itemId, newState);
+    // });
+    dispatchCheckItems({
+      type: "handleCheckboxChange",
+      itemId: itemId,
+      checklist: checklist,
     });
   };
 
   const handleDeleteChecklist = (e) => {
-    setCheckLists((prev) => prev.filter((item) => item.id !== e.target.id));
+    dispatchCheckLists({ type: "deleteCheckLists", e: e });
+    //setCheckLists((prev) => prev.filter((item) => item.id !== e.target.id));
     toast.success("Checklist deleted");
     deleteChecklistById(e.target.id);
   };
 
   const handleDeleteChecklistItem = (e) => {
-    setCheckItems((prev) => prev.filter((item) => item.id !== e.target.id));
+    dispatchCheckItems({ type: "deleteCheckLists", e: e });
+    //setCheckItems((prev) => prev.filter((item) => item.id !== e.target.id));
     toast.success("ChecklistItem deleted");
     deleteChecklistItemById(checklist.id, e.target.id);
   };
@@ -109,7 +162,7 @@ const SingleChecklist = ({ checklist, setCheckLists }) => {
       <CreateChecklistItemButton
         isAdding={isAdding}
         setIsAdding={setIsAdding}
-        setCheckItems={setCheckItems}
+        dispatchCheckItems={dispatchCheckItems}
         checklist={checklist}
       />
     </div>

@@ -1,13 +1,13 @@
 import BoardsList from "../components/BoardsList";
 
-const BoardsPage = ({ boards, boardsUpdate, listsUpdate, lists,remainingBoards, }) => {
+const BoardsPage = ({ boards, listsUpdate, lists,remainingBoards,dispatchBoards ,dispatchlist}) => {
   return (
     <BoardsList
-   
+    dispatchlist={dispatchlist}
+    dispatchBoards={dispatchBoards}
     remainingBoards={remainingBoards}
-      boardsUpdate={boardsUpdate}
       boards={boards}
-      setLists={listsUpdate}
+      //setLists={listsUpdate}
       lists={lists}
     />
   );

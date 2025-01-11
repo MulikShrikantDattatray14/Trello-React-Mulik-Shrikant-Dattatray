@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const CreateChecklistButton = ({
   isAdding,
   setIsAdding,
-  setCheckLists,
+  dispatchCheckLists,
   card,
 }) => {
   const handleAddNewChecklist = async (e) => {
@@ -14,7 +14,8 @@ const CreateChecklistButton = ({
         e.target.checklistName.value,
         card.id
       );
-      setCheckLists((prev) => [...prev, newChecklist]);
+      dispatchCheckLists({type:"addCheckLists", newChecklist:newChecklist})
+      //setCheckLists((prev) => [...prev, newChecklist]);
       toast.success("New Checklist created");
       setIsAdding(false);
     } catch {

@@ -5,7 +5,7 @@ import { fetchLists } from "../services/apiCalls";
 import { toast } from "react-toastify";
 import { deleteBoardById } from "../services/apiCalls";
 
-const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
+const BoardsList = ({ boards, remainingBoards ,dispatchBoards,dispatchlist}) => {
   
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
@@ -13,8 +13,8 @@ const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
   const fetchAndSetLists = async (boardId) => {
     try {
       let allLists = await fetchLists(boardId);
-
-      setLists(allLists);
+      dispatchlist({type:"fetchLists",allLists:allLists})
+      //setLists(allLists);
       navigate(`/boards/${boardId}`);
     } catch {
       toast.error("Error: Could not fetch lists for the given board");
@@ -24,8 +24,8 @@ const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
   const handleDeleteBoard = async (boardId) => {
     try {
       await deleteBoardById(boardId);
-      let updatedBoards = boards.filter((board) => board.id != boardId);
-      boardsUpdate(updatedBoards);
+      dispatchBoards({type:"deleteBoards" , boardId :boardId})
+      
       toast.success("Deleted board");
     } catch {
       toast.error("Error could not delete board");
@@ -36,10 +36,11 @@ const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
     <div className="w-full h-screen bg-gray-800 flex flex-col justify-start items-center px-4 py-4">
       <div>
         <CreateBoardButton
+        dispatchBoards={dispatchBoards}
           remainingBoards={remainingBoards}
           setIsEditing={setIsEditing}
           isEditing={isEditing}
-          boardsUpdate={boardsUpdate}
+          // boardsUpdate={boardsUpdate}
         />
       </div>
       <div className="flex flex-wrap justify-center">

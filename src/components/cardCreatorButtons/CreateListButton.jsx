@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 const CreateListButton = ({
   setIsEditing,
   isEditing,
-  listsUpdate,
+  dispatchlist,
   lists,
   AllBoardsInfo,
 }) => {
@@ -20,7 +20,8 @@ const CreateListButton = ({
   const handleCreateList = async (e) => {
     try {
       const newList = await createNewList(BoardID, e.target.listName.value);
-      listsUpdate((prevLists) => [...prevLists, newList]);
+      dispatchlist({ type: "addLists", newList: newList });
+      // listsUpdate((prevLists) => [...prevLists, newList]);
       toast.success("New list created");
     } catch {
       toast.error("Error: Could not create new list");

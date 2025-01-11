@@ -5,7 +5,7 @@ import { createNewChecklistItem } from "../../services/apiCalls";
 const CreateChecklistItemButton = ({
   isAdding,
   setIsAdding,
-  setCheckItems,
+  dispatchCheckItems,
   checklist,
 }) => {
   const handleNewChecklistItem = async (e) => {
@@ -14,7 +14,8 @@ const CreateChecklistItemButton = ({
         e.target.checklistItemName.value,
         checklist.id
       );
-      setCheckItems((prev) => [...prev, newChecklistItem]);
+      dispatchCheckItems({type:"addCheckLists",newChecklistItem:newChecklistItem})
+      //setCheckItems((prev) => [...prev, newChecklistItem]);
       setIsAdding(false);
     } catch {
       toast.error("Error: Could not create new checklist item");

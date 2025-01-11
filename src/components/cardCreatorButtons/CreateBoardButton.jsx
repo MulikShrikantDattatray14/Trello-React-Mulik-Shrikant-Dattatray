@@ -5,13 +5,15 @@ import { toast } from "react-toastify";
 const CreateBoardButton = ({
   setIsEditing,
   isEditing,
-  boardsUpdate,
+  // boardsUpdate,
   remainingBoards,
+  dispatchBoards,
 }) => {
   const handleCreateBoard = async (boardName) => {
     try {
       let newBoard = await createNewBoard(boardName);
-      boardsUpdate((prev) => [...prev, newBoard]);
+      // boardsUpdate((prev) => [...prev, newBoard]);
+      dispatchBoards({ type: "addBoards", newBoard: newBoard });
       toast.success("Created a new board");
     } catch {
       toast.error("Error: Could not create new board");

@@ -1,13 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 import SingleChecklist from "./SingleChecklist";
 import { fetchChecklists } from "../services/apiCalls";
 import CreateChecklistButton from "./cardCreatorButtons/CreateChecklistButton";
 import { deleteCardById } from "../services/apiCalls";
 
-const SingleCard = ({ card, setCards }) => {
+const checkListsInitialState = {
+  checkLists: [],
+};
+
+const checkListsReducer = (state, action) => {
+  switch (action.type) {
+    case "fetchCheckLists":
+      return { checkLists: action.checkListData };
+
+    case "addCheckLists":
+      return { checkLists: [...state.checkLists, action.newChecklist] };
+    // newChecklist
+    //setCheckLists((prev) => [...prev, newChecklist]);
+
+    case "deleteCheckLists":
+      let updatedCheckLists = [...state.checkLists].filter(
+        (item) => item.id !== action.e.target.id
+      );
+      return { checkLists: updatedCheckLists };
+
+    ////setCheckLists((prev) => prev.filter((item) => item.id !== e.target.id));
+  }
+};
+
+const SingleCard = ({ card, dispatchCards }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkLists, setCheckLists] = useState([]);
+  //const [checkLists, setCheckLists] = useState([]);
+  const [checkLists, dispatchCheckLists] = useReducer(
+    checkListsReducer,
+    checkListsInitialState
+  );
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
@@ -17,12 +45,18 @@ const SingleCard = ({ card, setCards }) => {
   const handleOpenDialog = async () => {
     setIsOpen(true);
     const checkListData = await fetchChecklists(card.id);
-    setCheckLists(checkListData);
+    dispatchCheckLists({
+      type: "fetchCheckLists",
+      checkListData: checkListData,
+    });
+
+    //setCheckLists(checkListData);
   };
   const handleCloseDialog = () => setIsOpen(false);
 
   const handleDeleteCard = async (e) => {
-    setCards((prev) => prev.filter((item) => item.id !== e.target.id));
+    dispatchCards({ type: "deleteCards", e: e });
+
     toast.success("Card deleted");
     await deleteCardById(e.target.id);
   };
@@ -58,31 +92,29 @@ const SingleCard = ({ card, setCards }) => {
           className="modal-box relative w-[1400px] h-[900px]"
           onClick={(e) => e.stopPropagation()}
         >
-         
           <div className="absolute top-4 right-4">
             <CreateChecklistButton
               isAdding={isAdding}
               setIsAdding={setIsAdding}
-              setCheckLists={setCheckLists}
+              // setCheckLists={setCheckLists}
+              dispatchCheckLists={dispatchCheckLists}
               card={card}
             />
           </div>
 
-         
           <h3 className="text-2xl font-semibold mb-4">{card.name}</h3>
 
-          
           <div className="overflow-y-auto h-[700px] mt-4">
-            {checkLists.map((checklist) => (
+            {checkLists.checkLists.map((checklist) => (
               <SingleChecklist
                 key={checklist.id}
                 checklist={checklist}
-                setCheckLists={setCheckLists}
+                // setCheckLists={setCheckLists}
+                dispatchCheckLists={dispatchCheckLists}
               />
             ))}
           </div>
 
-          
           <div className="absolute bottom-4 right-4">
             <button className="btn btn-primary" onClick={handleCloseDialog}>
               Close

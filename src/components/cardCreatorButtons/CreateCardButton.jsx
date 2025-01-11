@@ -2,11 +2,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { createNewCard } from "../../services/apiCalls";
 
-const CreateCardButton = ({ isAdding, setIsAdding, setCards, list }) => {
+const CreateCardButton = ({ isAdding, setIsAdding, dispatchCards, list }) => {
+
   const handleAddNewCard = async (e) => {
     try {
       let newCard = await createNewCard(e.target.cardName.value, list);
-      setCards((prev) => [...prev, newCard]);
+      dispatchCards({type:"addCards",newCard:newCard})
+      //setCards((prev) => [...prev, newCard]);
       toast.success("New Card created");
       setIsAdding(false);
     } catch {

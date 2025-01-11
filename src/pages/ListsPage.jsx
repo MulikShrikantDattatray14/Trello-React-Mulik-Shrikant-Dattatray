@@ -1,6 +1,6 @@
 import AllLists from "../components/AllLists";
-const ListsPage = ({ lists, listsUpdate ,AllBoardsInfo}) => {
-  return <AllLists lists={lists} listsUpdate={listsUpdate} AllBoardsInfo={AllBoardsInfo}/>;
+const ListsPage = ({ lists, dispatchlist ,AllBoardsInfo}) => {
+  return <AllLists lists={lists}  dispatchlist={dispatchlist}  AllBoardsInfo={AllBoardsInfo}/>;
 };
 
 export default ListsPage;
