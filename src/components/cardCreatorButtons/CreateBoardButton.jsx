@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { createNewBoard } from "../../services/apiCalls";
 import { toast } from "react-toastify";
-
+import { addData } from "../../slice/BoardSlice";
+import { useDispatch } from "react-redux";
 const CreateBoardButton = ({
   setIsEditing,
   isEditing,
   boardsUpdate,
   remainingBoards,
 }) => {
+  const dispatch=useDispatch()
   const handleCreateBoard = async (boardName) => {
     try {
-      let newBoard = await createNewBoard(boardName);
-      boardsUpdate((prev) => [...prev, newBoard]);
+      // let newBoard = await createNewBoard(boardName);
+      // boardsUpdate((prev) => [...prev, newBoard]);
+      dispatch(addData(boardName))
       toast.success("Created a new board");
     } catch {
       toast.error("Error: Could not create new board");

@@ -5,10 +5,14 @@ import { fetchLists } from "../services/apiCalls";
 import { toast } from "react-toastify";
 import { deleteBoardById } from "../services/apiCalls";
 
+import { deleteData } from "../slice/BoardSlice";
+import { useDispatch } from "react-redux";
+
 const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
   
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch=useDispatch()
 
   const fetchAndSetLists = async (boardId) => {
     try {
@@ -23,12 +27,13 @@ const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
 
   const handleDeleteBoard = async (boardId) => {
     try {
-      await deleteBoardById(boardId);
-      let updatedBoards = boards.filter((board) => board.id != boardId);
-      boardsUpdate(updatedBoards);
+      // await deleteBoardById(boardId);
+      // let updatedBoards = boards.filter((board) => board.id != boardId);
+      dispatch(deleteData(boardId))
+      // boardsUpdate(updatedBoards);
       toast.success("Deleted board");
-    } catch {
-      toast.error("Error could not delete board");
+    } catch  (error){
+      toast.error("Error could not delete board",error);
     }
   };
 
