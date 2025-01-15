@@ -16,9 +16,9 @@ function App() {
   const [boards, setBoards] = useState([]);
   const [lists, setLists] = useState([]);
 
-let remainingBoards= 10-boards.length;
+  let remainingBoards = 10 - boards.length;
 
-let AllBoardsInfo = Array.from(boards)
+  let AllBoardsInfo = Array.from(boards);
 
   const boardsUpdate = (newBoard) => {
     setBoards(newBoard);
@@ -41,7 +41,6 @@ let AllBoardsInfo = Array.from(boards)
     fetchAndSetBoards();
   }, []);
 
-  
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
@@ -49,8 +48,7 @@ let AllBoardsInfo = Array.from(boards)
           index
           element={
             <BoardsPage
-           
-            remainingBoards={remainingBoards}
+              remainingBoards={remainingBoards}
               boardsUpdate={boardsUpdate}
               boards={boards}
               listsUpdate={listsUpdate}
@@ -60,7 +58,13 @@ let AllBoardsInfo = Array.from(boards)
         />
         <Route
           path="/boards/:id"
-          element={<ListsPage lists={lists} listsUpdate={listsUpdate} AllBoardsInfo={AllBoardsInfo} />}
+          element={
+            <ListsPage
+              lists={lists}
+              listsUpdate={listsUpdate}
+              AllBoardsInfo={AllBoardsInfo}
+            />
+          }
         />
         <Route path="*" element={<PageNotFound />} />
       </Route>

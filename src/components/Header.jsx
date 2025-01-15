@@ -9,7 +9,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-black">
+    <header className="w-full bg-blue-400">
       <div className="navbar">
         <div className="navbar-start">
           <button
