@@ -28,7 +28,7 @@ const AllLists = ({ lists, listsUpdate, AllBoardsInfo }) => {
       </div>
 
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-black">
+        <h2 className="text-4xl font-bold text-black p-4">
           {BoardName}
         </h2>
       </div>
