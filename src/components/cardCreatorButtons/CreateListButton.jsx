@@ -29,10 +29,10 @@ const CreateListButton = ({
 
   return (
     <div
-      className="w-80 cursor-pointer z-10 relative hover:bg-black  hover:shadow-xl hover:border-gray-400"
+      className="w-80 border-2 border-black cursor-pointer z-10 relative hover:bg-black  hover:shadow-xl hover:border-gray-400"
       onClick={() => setIsEditing(true)}
     >
-      <div className="p-4 bg-white text-center">
+      <div className="p-2 bg-white text-center">
         <h3 className="text-black">Create New List +</h3>
       </div>
       {isEditing && (

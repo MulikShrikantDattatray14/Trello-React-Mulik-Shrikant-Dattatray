@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { fetchLists } from "../services/apiCalls";
 import { toast } from "react-toastify";
 import { deleteBoardById } from "../services/apiCalls";
+import img from "../../src/assets/boardlist.jpg";
+console.log(img);
+import { MdDelete } from "react-icons/md";
 
 const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
-  
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -33,7 +35,7 @@ const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
   };
 
   return (
-    <div className="w-full h-screen bg-gray-800 flex flex-col justify-start items-center px-4 py-4">
+    <div className="w-full h-screen bg-white bg-cover bg-center flex flex-col justify-start items-center px-4 py-4">
       <div>
         <CreateBoardButton
           remainingBoards={remainingBoards}
@@ -42,29 +44,28 @@ const BoardsList = ({ boardsUpdate, boards, setLists, remainingBoards }) => {
           boardsUpdate={boardsUpdate}
         />
       </div>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center ">
         {boards.map((board) => (
           <div
             key={board.id}
-            className="mt-8 mx-4 cursor-pointer"
+            className="mt-8 mx-4 cursor-pointer  bg-white p-2"
             onClick={(e) => {
               e.preventDefault();
               fetchAndSetLists(board.id);
             }}
           >
-            <div className="relative w-80 h-32 bg-white text-black shadow-md hover:shadow-2xl hover:border-2 hover:border-gray-800">
+            <div className="relative w-80 h-32  bg-white text-black border-black shadow-2xl hover:border-2 hover:border-white-800 ">
               <div className="p-4 relative">
-                <h3 className="text-lg font-semibold">{board.name}</h3>
+                <h3 className="text-lg font-bold">{board.name}</h3>
 
-               
                 <button
-                  className="absolute top-2 right-2 text-gray-500 hover:text-white hover:bg-black border-2 border-black rounded-md px-2 py-1 text-sm"
+                  className="absolute top-2 right-2 text-black hover:text-white hover:bg-black  rounded-md px-2 py-1 text-sm hover:border-white"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDeleteBoard(board.id);
                   }}
                 >
-                  DELETE
+                  X
                 </button>
               </div>
             </div>

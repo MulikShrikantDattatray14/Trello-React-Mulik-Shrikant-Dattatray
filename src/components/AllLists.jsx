@@ -10,13 +10,14 @@ const AllLists = ({ lists, listsUpdate, AllBoardsInfo }) => {
   let BoardID = param.id;
 
   let BoardName = AllBoardsInfo.filter((element) => element.id === BoardID).map(
-    (element) => element.name
+    (element) => element.name.toUpperCase()
   );
-  console.log(BoardName);
+  //console.log(typeof BoardName)
+  //BoardName= BoardName.toUpperCase() 
 
   return (
-    <div className="w-full h-[95vh] bg-gray-700 z-100 relative flex flex-col gap-2">
-      <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-200 p-4">
+    <div className="w-full h-[95vh] bg-white z-100 relative flex flex-col gap-2 p-8 shadow-lg ">
+      <div className="flex justify-center p-2 ">
         <CreateListButton
           AllBoardsInfo={AllBoardsInfo}
           setIsEditing={setIsEditing}
@@ -26,11 +27,13 @@ const AllLists = ({ lists, listsUpdate, AllBoardsInfo }) => {
         />
       </div>
 
-      <div className="fixed top-48 left-1/2 transform -translate-x-1/2 z-140 text-center w-auto">
-        <h2 className="text-2xl font-bold text-white">{BoardName}</h2>
+      <div className="text-center">
+        <h2 className="text-4xl font-bold text-black">
+          {BoardName}
+        </h2>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pt-60">
+      <div className="flex gap-4 overflow-x-auto  pt-5 p-0 shadow-lg P-2">
         {lists.map((list) => (
           <SingleList key={list.id} list={list} setLists={listsUpdate} />
         ))}

@@ -20,10 +20,10 @@ const CreateBoardButton = ({
 
   return (
     <div
-      className="w-80 p-4 bg-white text-center cursor-pointer relative rounded-lg shadow-md hover:bg-gray-200"
+      className="w-80 p-4 bg-white text-center cursor-pointer relative rounded-lg hover:shadow-lg border-4 border-black"
       onClick={() => setIsEditing(true)}
     >
-      <div>
+      <div >
         <h3 className="text-black">Create New Board +</h3>
         <p className="text-black">{remainingBoards} Boards Remaining</p>
       </div>

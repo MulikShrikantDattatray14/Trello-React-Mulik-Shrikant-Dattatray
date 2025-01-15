@@ -4,7 +4,7 @@ import SingleChecklist from "./SingleChecklist";
 import { fetchChecklists } from "../services/apiCalls";
 import CreateChecklistButton from "./cardCreatorButtons/CreateChecklistButton";
 import { deleteCardById } from "../services/apiCalls";
-
+import { FaWindowClose } from "react-icons/fa";
 const SingleCard = ({ card, setCards }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [checkLists, setCheckLists] = useState([]);
@@ -31,20 +31,23 @@ const SingleCard = ({ card, setCards }) => {
     <>
       <div
         onClick={handleOpenDialog}
-        className="my-2 cursor-pointer relative border-1 border-black mb-15"
+        className="my-2 cursor-pointer relative   mb-15 shadow-lg "
       >
         <div className="card w-[320px] h-[65px] bg-white shadow-md hover:shadow-lg hover:border-2 hover:border-gray-400">
           <div className="card-body relative p-2">
-            <h3 className="text-lg font-semibold">{card.name}</h3>
+            <h3 className="text-lg font-semibold">
+              {typeof card.name === "string" ? card.name.toUpperCase() : ""}
+            </h3>
+
             <button
               id={card.id}
               onClick={(e) => {
                 e.stopPropagation();
                 handleDeleteCard(e);
               }}
-              className="absolute top-0 right-0 text-xs p-1 text-black-300 hover:text-white hover:bg-black  border-2 border-black hover:border-white mb-10"
+              className="absolute top-0 right-0 text-4xl p-3 text-black-300 hover:text-white hover:bg-black  hover:border-white mb-10"
             >
-              DELETE
+              -
             </button>
           </div>
         </div>
@@ -58,7 +61,6 @@ const SingleCard = ({ card, setCards }) => {
           className="modal-box relative w-[1400px] h-[900px]"
           onClick={(e) => e.stopPropagation()}
         >
-         
           <div className="absolute top-4 right-4">
             <CreateChecklistButton
               isAdding={isAdding}
@@ -68,10 +70,8 @@ const SingleCard = ({ card, setCards }) => {
             />
           </div>
 
-         
           <h3 className="text-2xl font-semibold mb-4">{card.name}</h3>
 
-          
           <div className="overflow-y-auto h-[700px] mt-4">
             {checkLists.map((checklist) => (
               <SingleChecklist
@@ -82,7 +82,6 @@ const SingleCard = ({ card, setCards }) => {
             ))}
           </div>
 
-          
           <div className="absolute bottom-4 right-4">
             <button className="btn btn-primary" onClick={handleCloseDialog}>
               Close

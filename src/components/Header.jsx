@@ -9,12 +9,12 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-blue-400">
+    <header className="w-full bg-black">
       <div className="navbar">
         <div className="navbar-start">
           <button
             onClick={navigateToBoard}
-            className="btn btn-outline btn-white mr-[39vw] ml-4 hover:bg-gray-700 hover:text-white hover:border-gray-400 text-gray-500"
+            className="btn btn-outline btn-white mr-[39vw] ml-4 bg-white hover:bg-gray-700 hover:text-white hover:border-gray-400 text-black"
           >
             All Boards
           </button>
